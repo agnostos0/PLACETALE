@@ -104,6 +104,43 @@ function renderEventsFromJson(url, pageSize = 6) {
 
 document.addEventListener('DOMContentLoaded', () => {
     validateContactForm();
+    // Toggle header items based on session
+    try {
+        fetch('session_info.php', { credentials: 'same-origin' })
+            .then(r => r.ok ? r.json() : { loggedIn: false })
+            .then(info => {
+                const nav = document.querySelector('.nav-links');
+                if (!nav) return;
+                const loginItem = nav.querySelector('a[href="login.html"]');
+                let profileItem = nav.querySelector('a[href="profile.php"]');
+                let logoutItem = nav.querySelector('a[href="logout.php"]');
+
+                if (info.loggedIn) {
+                    // Add/ensure Profile and Logout links
+                    if (!profileItem) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="profile.php"><i class="fas fa-user"></i> ${info.name ? info.name.split(' ')[0] : 'Profile'}</a>`;
+                        nav.appendChild(li);
+                        profileItem = li.querySelector('a');
+                    } else if (info.name) {
+                        profileItem.innerHTML = `<i class="fas fa-user"></i> ${info.name.split(' ')[0]}`;
+                    }
+                    if (!logoutItem) {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>`;
+                        nav.appendChild(li);
+                    }
+                    // Hide Login link
+                    if (loginItem) loginItem.parentElement.style.display = 'none';
+                } else {
+                    // Ensure Login is visible and remove profile/logout if present
+                    if (loginItem) loginItem.parentElement.style.display = '';
+                    if (profileItem) profileItem.parentElement.remove();
+                    if (logoutItem) logoutItem.parentElement.remove();
+                }
+            })
+            .catch(() => {});
+    } catch (_) {}
 });
 
 
