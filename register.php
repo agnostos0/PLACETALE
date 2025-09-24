@@ -1,21 +1,18 @@
 <?php
-// Registration handler: sanitize, validate, store, and redirect
+require __DIR__ . '/db.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Fetch raw inputs
     $rawName = $_POST['name'] ?? '';
     $rawEmail = $_POST['email'] ?? '';
     $rawPassword = $_POST['password'] ?? '';
 
-    // Normalize whitespace
     $name = trim(preg_replace('/\s+/', ' ', (string)$rawName));
     $email = trim((string)$rawEmail);
     $password = (string)$rawPassword;
 
-    // Sanitize for storage/display
     $name = filter_var($name, FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH);
     $emailSanitized = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    // Validate
     $nameValid = (strlen($name) >= 3 && str_word_count($name) >= 1);
     $emailValid = filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) !== false;
     $passwordValid = (strlen($password) >= 8);
@@ -25,34 +22,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Prepare record
-    $record = [
-        'name' => $name,
-        'email' => strtolower($emailSanitized),
-        // Store hashed password only
-        'password_hash' => password_hash($password, PASSWORD_DEFAULT),
-        'created_at' => date('c'),
-        'ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-        'ua' => $_SERVER['HTTP_USER_AGENT'] ?? ''
-    ];
+    $emailLower = strtolower($emailSanitized);
+    $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Append to CSV for easy viewing
-    $csvPath = __DIR__ . '/registrations.csv';
-    $csvOk = false;
-    if ($fp = @fopen($csvPath, 'a')) {
-        @fputcsv($fp, [$record['name'], $record['email'], $record['password_hash'], $record['created_at'], $record['ip']]);
-        @fclose($fp);
-        $csvOk = true;
-    }
+    try {
+        $pdo = get_pdo();
+        $pdo->exec('CREATE TABLE IF NOT EXISTS users (
+            id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(150) NOT NULL,
+            email VARCHAR(160) NOT NULL UNIQUE,
+            password_hash VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 
-    // Append to JSON-lines file for structured storage
-    $jsonPath = __DIR__ . '/registrations.jsonl';
-    $jsonOk = (bool)@file_put_contents($jsonPath, json_encode($record, JSON_UNESCAPED_SLASHES) . "\n", FILE_APPEND | LOCK_EX);
-
-    if ($csvOk || $jsonOk) {
+        $stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash) VALUES (:n, :e, :p)');
+        $stmt->execute([':n' => $name, ':e' => $emailLower, ':p' => $hash]);
         header('Location: success.html');
-    } else {
-        header('Location: error.html?reason=write_failed');
+    } catch (PDOException $ex) {
+        if ((int)$ex->errorInfo[1] === 1062) {
+            header('Location: error.html?reason=duplicate_email');
+        } else {
+            header('Location: error.html?reason=db_error');
+        }
     }
     exit;
 }

@@ -1,5 +1,6 @@
 <?php
 // Session bootstrap and Remember Me auto-login
+require_once __DIR__ . '/db.php';
 
 // Secure session settings
 ini_set('session.use_strict_mode', 1);
@@ -31,21 +32,16 @@ if (!is_logged_in() && isset($_COOKIE['pt_remember'])) {
             $claims = json_decode(base64_decode($payload), true);
             if (is_array($claims) && ($claims['x'] ?? 0) > time()) {
                 // Load user from file store
-                $jsonPath = __DIR__ . '/registrations.jsonl';
-                if (file_exists($jsonPath)) {
-                    $fh = fopen($jsonPath, 'r');
-                    if ($fh) {
-                        while (($line = fgets($fh)) !== false) {
-                            $rec = json_decode($line, true);
-                            if (!is_array($rec)) continue;
-                            if (strtolower($rec['email'] ?? '') === strtolower($claims['e'] ?? '')) {
-                                $_SESSION['user_email'] = $rec['email'];
-                                $_SESSION['user_name'] = $rec['name'];
-                                break;
-                            }
-                        }
-                        fclose($fh);
+                try {
+                    $pdo = get_pdo();
+                    $stmt = $pdo->prepare('SELECT name, email FROM users WHERE email = :e LIMIT 1');
+                    $stmt->execute([':e' => strtolower($claims['e'] ?? '')]);
+                    if ($row = $stmt->fetch()) {
+                        $_SESSION['user_email'] = $row['email'];
+                        $_SESSION['user_name'] = $row['name'];
                     }
+                } catch (PDOException $e) {
+                    // ignore on auto-login
                 }
             }
         }

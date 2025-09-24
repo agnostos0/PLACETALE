@@ -1,4 +1,5 @@
 <?php require __DIR__ . '/auth.php'; if (!is_logged_in()) { header('Location: login.html?error=login_required'); exit; } ?>
+<?php require __DIR__ . '/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,6 +42,26 @@
                 <div class="feature">
                     <h3>Events</h3>
                     <p>Find workshops and meetups to improve storytelling.</p>
+                </div>
+            </div>
+            <div style="margin-top:2rem">
+                <h3>Latest Events</h3>
+                <div class="events-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:0.8rem">
+                <?php
+                try {
+                    $pdo = get_pdo();
+                    $stmt = $pdo->query('SELECT title, event_date, place, description FROM events ORDER BY event_date DESC LIMIT 5');
+                    foreach ($stmt as $ev) {
+                        echo '<div class="event-card">';
+                        echo '<h3>' . htmlspecialchars($ev['title']) . '</h3>';
+                        echo '<div class="event-meta"><i class="fas fa-calendar"></i> ' . htmlspecialchars(date('M d, Y', strtotime($ev['event_date']))) . ' &nbsp; • &nbsp; <i class="fas fa-map-marker-alt"></i> ' . htmlspecialchars($ev['place']) . '</div>';
+                        echo '<p>' . htmlspecialchars($ev['description']) . '</p>';
+                        echo '</div>';
+                    }
+                } catch (Throwable $e) {
+                    echo '<p>Could not load events.</p>';
+                }
+                ?>
                 </div>
             </div>
         </section>

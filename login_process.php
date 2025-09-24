@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/db.php';
 session_start();
 
 function redirect_with_error(string $reason): void {
@@ -18,27 +19,16 @@ if (!filter_var(filter_var($email, FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL
     redirect_with_error('invalid_input');
 }
 
-// Very simple auth against registrations.jsonl (demo purposes only)
-$jsonPath = __DIR__ . '/registrations.jsonl';
-if (!file_exists($jsonPath)) {
-    redirect_with_error('no_users');
+try {
+    $pdo = get_pdo();
+    $stmt = $pdo->prepare('SELECT id, name, email, password_hash FROM users WHERE email = :e LIMIT 1');
+    $stmt->execute([':e' => strtolower($email)]);
+    $found = $stmt->fetch();
+} catch (PDOException $e) {
+    redirect_with_error('db_error');
 }
 
-$found = null;
-$fh = fopen($jsonPath, 'r');
-if ($fh) {
-    while (($line = fgets($fh)) !== false) {
-        $rec = json_decode($line, true);
-        if (!is_array($rec)) continue;
-        if (strtolower($rec['email'] ?? '') === strtolower($email)) {
-            $found = $rec;
-            break;
-        }
-    }
-    fclose($fh);
-}
-
-if (!$found || !password_verify($password, $found['password_hash'] ?? '')) {
+if (!$found || !password_verify($password, $found['password_hash'])) {
     redirect_with_error('auth_failed');
 }
 
