@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# PHP / composer (if added later)
+vendor/
+composer.lock
+
+# Environment / secrets
+.env
+
+# App data (do not commit user data)
+registrations.csv
+registrations.jsonl
+*.log
+
+# Node (if added later)
+node_modules/
+
+

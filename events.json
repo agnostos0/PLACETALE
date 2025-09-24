@@ -1,0 +1,16 @@
+[
+  { "id": 1, "title": "Storytelling Meetup #1", "date": "2025-10-01", "place": "Campus Hall", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 2, "title": "Storytelling Meetup #2", "date": "2025-10-05", "place": "Library Lawn", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 3, "title": "Storytelling Meetup #3", "date": "2025-10-09", "place": "Auditorium", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 4, "title": "Storytelling Meetup #4", "date": "2025-10-12", "place": "Online", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 5, "title": "Storytelling Meetup #5", "date": "2025-10-15", "place": "Campus Hall", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 6, "title": "Storytelling Meetup #6", "date": "2025-10-20", "place": "Library Lawn", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 7, "title": "Storytelling Meetup #7", "date": "2025-10-22", "place": "Auditorium", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 8, "title": "Storytelling Meetup #8", "date": "2025-10-26", "place": "Online", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 9, "title": "Storytelling Meetup #9", "date": "2025-11-01", "place": "Campus Hall", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 10, "title": "Storytelling Meetup #10", "date": "2025-11-05", "place": "Library Lawn", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 11, "title": "Storytelling Meetup #11", "date": "2025-11-09", "place": "Auditorium", "description": "A collaborative session to share and refine place-based stories." },
+  { "id": 12, "title": "Storytelling Meetup #12", "date": "2025-11-15", "place": "Online", "description": "A collaborative session to share and refine place-based stories." }
+]
+
+

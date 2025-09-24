@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input {
+            border-color: #ff4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .form-group.success input {
+            border-color: #00c851;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="login.html" class="active"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Login Section -->
+    <main>
+        <section class="content-section login-section">
+            <h2>Welcome Back</h2>
+            <p>Please login to continue your PlaceTale journey.</p>
+            <form class="story-form" id="loginForm" method="POST" action="login_process.php" novalidate>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com" />
+                    <div class="error-message">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password" />
+                    <div class="error-message">Please enter your password</div>
+                </div>
+                <div class="form-group" style="text-align:left">
+                    <label style="display:flex;align-items:center;gap:0.5rem">
+                        <input type="checkbox" name="remember" id="remember" /> Remember me
+                    </label>
+                </div>
+                <div class="form-group center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+                </div>
+                <p class="form-footer-text">Don't have an account? <a href="signup.html">Sign up here</a></p>
+            </form>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.getElementById('loginForm');
+                    
+                    function validateEmail(email) {
+                        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        return re.test(email);
+                    }
+
+                    form.addEventListener('submit', function(e) {
+                        let isValid = true;
+
+                        // Validate email
+                        const emailInput = document.getElementById('email');
+                        if (!validateEmail(emailInput.value)) {
+                            emailInput.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            emailInput.parentElement.classList.remove('error');
+                            emailInput.parentElement.classList.add('success');
+                        }
+
+                        // Validate password (just check if it's not empty)
+                        const passwordInput = document.getElementById('password');
+                        if (passwordInput.value.length < 1) {
+                            passwordInput.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            passwordInput.parentElement.classList.remove('error');
+                            passwordInput.parentElement.classList.add('success');
+                        }
+
+                        if (!isValid) {
+                            e.preventDefault();
+                        }
+                    });
+                });
+            </script>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sitemap & Requirements - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+        .card { background: rgba(255,255,255,0.6); border-radius: 14px; padding: 1rem; }
+        .card h3 { margin-bottom: 0.5rem; }
+        .roles li, .pages li { margin-left: 1rem; margin-bottom: 0.2rem; }
+        .flow { list-style: decimal; margin-left: 1.2rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content-section">
+            <h2>Project Scope & Roles</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Scope</h3>
+                    <p>A student storytelling portal for sharing place-based tales, exploring stories, and engaging with events and community features.</p>
+                </div>
+                <div class="card">
+                    <h3>User Roles</h3>
+                    <ul class="roles">
+                        <li><strong>Guest</strong>: Browse stories/events, view FAQs, read About</li>
+                        <li><strong>Student</strong>: Register/Login, submit tales, manage profile</li>
+                        <li><strong>Admin</strong>: Approve/moderate content, manage events/users</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Sitemap</h2>
+            <div class="grid pages">
+                <div class="card"><h3>Key Pages</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="stories.html">Stories</a></li>
+                        <li><a href="story-himalaya.html">Story Detail</a></li>
+                        <li><a href="submit.html">Submit Tale</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="signup.html">Register</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="terms.html">Terms</a></li>
+                        <li><a href="dashboard.html">Student Dashboard</a></li>
+                        <li><a href="admin.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Navigation Flow</h3>
+                    <ol class="flow">
+                        <li>Guest lands on Home → explores Stories/Events</li>
+                        <li>Guest registers or logs in</li>
+                        <li>Student accesses Dashboard → Submit Tale</li>
+                        <li>Admin reviews submissions → publishes to Stories</li>
+                        <li>Users browse, contact support, read FAQs/Terms</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

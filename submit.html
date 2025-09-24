@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Share Your Tale - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea,
+        .form-group.error select {
+            border-color: #ff4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .form-group.success input,
+        .form-group.success textarea,
+        .form-group.success select {
+            border-color: #00c851;
+        }
+
+        #wordCount {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html" class="active"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main -->
+    <main>
+        <section class="content-section">
+            <h2>Share Your Tale</h2>
+            <p>Got a special memory or story tied to a place? Share it with the world!</p>
+            <form class="story-form" id="submitStoryForm" novalidate>
+                <div class="form-group">
+                    <label for="title">Title of the Tale</label>
+                    <input type="text" id="title" name="title" required placeholder="e.g., The Hidden Temple of Udaipur" />
+                    <div class="error-message">Title must be between 5 and 100 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required placeholder="City, Place, or Coordinates" />
+                    <div class="error-message">Please enter a valid location</div>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select</option>
+                        <option value="legend">Local Legend</option>
+                        <option value="personal">Personal Memory</option>
+                        <option value="history">Historical</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="adventure">Adventure</option>
+                    </select>
+                    <div class="error-message">Please select a category</div>
+                </div>
+                <div class="form-group">
+                    <label for="story">Your Story</label>
+                    <textarea id="story" name="story" rows="8" required placeholder="Write your tale here..."></textarea>
+                    <div id="wordCount">0 words (minimum 100 words required)</div>
+                    <div class="error-message">Story must be at least 100 words</div>
+                </div>
+                <div class="form-group center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Tale</button>
+                </div>
+            </form>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const form = document.getElementById('submitStoryForm');
+                    const storyTextarea = document.getElementById('story');
+                    const wordCount = document.getElementById('wordCount');
+
+                    function countWords(str) {
+                        return str.trim().split(/\s+/).filter(word => word.length > 0).length;
+                    }
+
+                    function updateWordCount() {
+                        const words = countWords(storyTextarea.value);
+                        wordCount.textContent = `${words} words (minimum 100 words required)`;
+                        if (words >= 100) {
+                            wordCount.style.color = '#00c851';
+                        } else {
+                            wordCount.style.color = '#666';
+                        }
+                    }
+
+                    storyTextarea.addEventListener('input', updateWordCount);
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        let isValid = true;
+
+                        // Validate title
+                        const titleInput = document.getElementById('title');
+                        if (titleInput.value.length < 5 || titleInput.value.length > 100) {
+                            titleInput.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            titleInput.parentElement.classList.remove('error');
+                            titleInput.parentElement.classList.add('success');
+                        }
+
+                        // Validate location
+                        const locationInput = document.getElementById('location');
+                        if (locationInput.value.length < 3) {
+                            locationInput.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            locationInput.parentElement.classList.remove('error');
+                            locationInput.parentElement.classList.add('success');
+                        }
+
+                        // Validate category
+                        const categorySelect = document.getElementById('category');
+                        if (!categorySelect.value) {
+                            categorySelect.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            categorySelect.parentElement.classList.remove('error');
+                            categorySelect.parentElement.classList.add('success');
+                        }
+
+                        // Validate story
+                        const words = countWords(storyTextarea.value);
+                        if (words < 100) {
+                            storyTextarea.parentElement.classList.add('error');
+                            isValid = false;
+                        } else {
+                            storyTextarea.parentElement.classList.remove('error');
+                            storyTextarea.parentElement.classList.add('success');
+                        }
+
+                        if (isValid) {
+                            // Here you would typically send the data to your server
+                            alert('Story submitted successfully! It will be reviewed by our team.');
+                            form.reset();
+                            document.querySelectorAll('.form-group').forEach(group => {
+                                group.classList.remove('success');
+                            });
+                            wordCount.textContent = '0 words (minimum 100 words required)';
+                            wordCount.style.color = '#666';
+                        }
+                    });
+                });
+            </script>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

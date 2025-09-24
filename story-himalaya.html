@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whispers of the Himalayas - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        .story-hero {
+            height: 60vh;
+            position: relative;
+            background: url('https://source.unsplash.com/random/1920x1080?himalaya') center/cover;
+        }
+        
+        .story-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+        }
+        
+        .story-hero-content {
+            position: relative;
+            color: white;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .story-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .story-content {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .story-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html" class="active"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Story Section -->
+    <main>
+        <section class="story-hero">
+            <div class="story-hero-content">
+                <h1>Whispers of the Himalayas</h1>
+                <div class="story-meta">
+                    <span><i class="fas fa-map-marker-alt"></i> Himalayan Mountains</span>
+                    <span><i class="fas fa-user"></i> By Mountain Explorer</span>
+                    <span><i class="fas fa-calendar"></i> September 15, 2024</span>
+                </div>
+            </div>
+        </section>
+
+        <article class="story-content">
+            <p>It was just before sunrise when I reached the final bend. The winds were crisp, and the silence of the Himalayas echoed louder than any words. I paused, not out of exhaustion, but awe. As the sun slowly crept over the snow-laden peaks, golden hues spilled across the sky like a painter's brushstroke. I wasn't alone — the mountain spoke too.</p>
+            
+            <p>The air at this altitude was thin, but somehow it felt more fulfilling than any breath I'd taken in the bustling cities below. Each inhale carried stories of ancient peaks, of countless climbers who had stood where I stood, of dreams both achieved and surrendered to the mountain's will.</p>
+            
+            <p>I felt peace, a kind of peace that we lose in the noise of daily life. I sat there for hours, letting the mountains whisper their stories. And in that moment, I realized that travel isn't about reaching places — it's about what those places reach inside us.</p>
+            
+            <p>The sun continued its journey across the sky, transforming the white peaks into golden sentinels. Below, valleys emerged from shadow, revealing tiny monasteries and villages that have existed in harmony with these mountains for centuries. Each one held its own tales, its own whispers of wisdom.</p>
+            
+            <p>As I began my descent, I carried with me not just memories, but a profound understanding: the Himalayas don't just stand as Earth's highest peaks; they serve as bridges between the earthly and the divine, between what we know and what we seek to understand.</p>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

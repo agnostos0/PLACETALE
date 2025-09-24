@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sign Up - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input {
+            border-color: #ff4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .form-group.success input {
+            border-color: #00c851;
+        }
+
+        .password-strength {
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .strength-weak { color: #ff4444; }
+        .strength-medium { color: #ffa000; }
+        .strength-strong { color: #00c851; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sign Up Section -->
+    <main>
+        <section class="content-section login-section">
+            <h2>Create an Account</h2>
+            <p>Join PlaceTale and start sharing your own stories today.</p>
+            <form class="story-form" id="signupForm" method="POST" action="register.php" novalidate>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your full name" />
+                    <div class="error-message">Please enter your full name (minimum 2 words)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="you@example.com" />
+                    <div class="error-message">Please enter a valid email address</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Create a password" />
+                    <div class="error-message">Password must be at least 8 characters with letters, numbers, and symbols</div>
+                    <div class="password-strength"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required placeholder="Repeat your password" />
+                    <div class="error-message">Passwords do not match</div>
+                </div>
+
+                <div class="form-group center">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Sign Up</button>
+                </div>
+
+                <p class="form-footer-text">Already have an account? <a href="login.html">Log in here</a></p>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('signupForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm-password');
+            const passwordStrength = document.querySelector('.password-strength');
+
+            // Function to check password strength
+            function checkPasswordStrength(password) {
+                const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                const mediumRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{7,}$/;
+                
+                if (strongRegex.test(password)) {
+                    passwordStrength.textContent = 'Strong password';
+                    passwordStrength.className = 'password-strength strength-strong';
+                    return true;
+                } else if (mediumRegex.test(password)) {
+                    passwordStrength.textContent = 'Medium strength - add special characters';
+                    passwordStrength.className = 'password-strength strength-medium';
+                    return false;
+                } else {
+                    passwordStrength.textContent = 'Weak password';
+                    passwordStrength.className = 'password-strength strength-weak';
+                    return false;
+                }
+            }
+
+            // Validate name (at least 2 words)
+            function validateName(name) {
+                const words = name.trim().split(/\s+/);
+                return words.length >= 2 && words.every(word => word.length > 0);
+            }
+
+            // Validate email
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+
+            // Real-time password strength check
+            password.addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+            });
+
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                let isValid = true;
+
+                // Validate name
+                const nameInput = document.getElementById('name');
+                if (!validateName(nameInput.value)) {
+                    nameInput.parentElement.classList.add('error');
+                    isValid = false;
+                } else {
+                    nameInput.parentElement.classList.remove('error');
+                    nameInput.parentElement.classList.add('success');
+                }
+
+                // Validate email
+                const emailInput = document.getElementById('email');
+                if (!validateEmail(emailInput.value)) {
+                    emailInput.parentElement.classList.add('error');
+                    isValid = false;
+                } else {
+                    emailInput.parentElement.classList.remove('error');
+                    emailInput.parentElement.classList.add('success');
+                }
+
+                // Validate password
+                if (!checkPasswordStrength(password.value)) {
+                    password.parentElement.classList.add('error');
+                    isValid = false;
+                } else {
+                    password.parentElement.classList.remove('error');
+                    password.parentElement.classList.add('success');
+                }
+
+                // Check if passwords match
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.parentElement.classList.add('error');
+                    isValid = false;
+                } else {
+                    confirmPassword.parentElement.classList.remove('error');
+                    confirmPassword.parentElement.classList.add('success');
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

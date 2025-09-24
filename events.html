@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - PlaceTale</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        .events-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .event-card { background: rgba(255,255,255,0.6); border-radius: 14px; padding: 1.2rem; backdrop-filter: blur(6px); }
+        .event-card h3 { margin-bottom: 0.4rem; color: #2c3e50; }
+        .event-meta { font-size: 0.9rem; color: #555; margin-bottom: 0.6rem; }
+        .pager { display: flex; justify-content: center; gap: 0.6rem; margin-top: 1rem; }
+        .pager button { padding: 0.5rem 0.9rem; border-radius: 10px; border: 1px solid #ccc; background: white; cursor: pointer; }
+        .pager button.active { background: #4a90e2; color: #fff; border-color: #4a90e2; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">PlaceTale</a>
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="stories.html"><i class="fas fa-book"></i> Stories</a></li>
+                    <li><a href="events.html" class="active"><i class="fas fa-calendar"></i> Events</a></li>
+                    <li><a href="submit.html"><i class="fas fa-plus"></i> Share a Tale</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content-section">
+            <h2>Upcoming Community Events</h2>
+            <div style="display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center;justify-content:center;margin:1rem 0 1.2rem">
+                <select id="filterPlace" aria-label="Filter by place" style="padding:0.5rem 0.8rem;border-radius:10px;border:1px solid #ccc;background:#fff">
+                    <option value="">All locations</option>
+                    <option value="Campus Hall">Campus Hall</option>
+                    <option value="Library Lawn">Library Lawn</option>
+                    <option value="Auditorium">Auditorium</option>
+                    <option value="Online">Online</option>
+                </select>
+                <select id="sortBy" aria-label="Sort events" style="padding:0.5rem 0.8rem;border-radius:10px;border:1px solid #ccc;background:#fff">
+                    <option value="date_asc">Date ↑</option>
+                    <option value="date_desc">Date ↓</option>
+                    <option value="title_asc">Title A→Z</option>
+                    <option value="title_desc">Title Z→A</option>
+                </select>
+                <input id="searchTerm" type="search" placeholder="Search title..." style="padding:0.5rem 0.8rem;border-radius:10px;border:1px solid #ccc;background:#fff;min-width:220px"/>
+            </div>
+            <div id="eventsContainer" class="events-list"></div>
+            <div id="pagination" class="pager"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2024 PlaceTale. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="faq.html">FAQ</a>
+                <a href="terms.html">Terms & Conditions</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderEventsFromJson('events.json');
+        });
+    </script>
+</body>
+</html>
+
